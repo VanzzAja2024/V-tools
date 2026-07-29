@@ -5,7 +5,6 @@ function startApp() {
     // Membuka saluran WhatsApp di tab baru
     window.open("https://whatsapp.com/channel/0029VatTAQm7T8bP8Vhwqs3L", "_blank");
     
-    // Langsung masuk ke dashboard aplikasi
     const authPage = document.getElementById('authPage');
     const dashboardPage = document.getElementById('dashboardPage');
     
@@ -61,7 +60,7 @@ function switchTab(tabName) {
     }
 }
 
-// --- FITUR 1: TIKTOK DOWNLOADER (TikWM API) ---
+// --- FITUR 1: TIKTOK DOWNLOADER (Download otomatis di tab yang sama seperti Remove.bg) ---
 async function downloadVideo() {
     const urlInput = document.getElementById('urlInput').value.trim();
     const loading = document.getElementById('loadingTiktok');
@@ -101,7 +100,12 @@ async function downloadVideo() {
         }
 
         videoTitle.textContent = videoData.title || "Video TikTok Tanpa Watermark";
+        
+        // Menggunakan atribut download agar langsung mengunduh di halaman yang sama
         downloadLink.href = downloadUrl;
+        downloadLink.setAttribute('download', 'tiktok_video.mp4');
+        downloadLink.removeAttribute('target'); // Menghapus _blank agar tidak buka tab baru
+
         videoPreview.src = downloadUrl;
         videoPreview.classList.remove('hidden');
         result.classList.remove('hidden');
