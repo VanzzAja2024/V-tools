@@ -3,7 +3,7 @@ function startApp() {
     localStorage.setItem('hasStarted', 'true');
     
     // Ganti dengan tautan Saluran WhatsApp Anda
-    const whatsappChannelLink = "https://whatsapp.com/channel/YOUR_CHANNEL_ID_HERE"; 
+    const whatsappChannelLink = "https://whatsapp.com/channel/0029VatTAQm7T8bP8Vhwqs3L"; 
     window.open(whatsappChannelLink, '_blank');
     
     checkLoginState();
