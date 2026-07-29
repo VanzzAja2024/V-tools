@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <!-- HALAMAN START -->
+    <!-- HALAMAN START (PENGGANTI LOGIN) -->
     <div id="authPage" class="auth-container">
         <div class="auth-card">
             <div class="auth-header">
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN UTAMA / DASHBOARD -->
+    <!-- HALAMAN UTAMA / DASHBOARD (Background menggunakan halaman.png) -->
     <div id="dashboardPage" class="dashboard-container hidden">
         <div class="dashboard-overlay"></div>
         
@@ -61,66 +61,12 @@
                     <div id="resultTiktok" class="hidden card-result">
                         <h4 id="videoTitle">Judul Video</h4>
                         <video id="videoPreview" controls class="hidden"></video>
-                        <a id="downloadLink" class="btn-download-link">💾 Simpan Video ke Perangkat</a>
+                        <a id="downloadLink" href="#" target="_blank" class="btn-download-link">💾 Simpan Video ke Perangkat</a>
                     </div>
                     <div id="errorTiktok" class="hidden error-msg"></div>
                 </div>
 
                 <!-- FITUR 2: HAPUS BACKGROUND -->
-                <div id="bgremoverSection" class="tool-section hidden">
-                    <h3>AI Background Remover</h3>
-                    <p class="section-desc">Unggah foto Anda untuk menghapus latar belakang secara instan.</p>
-                    
-                    <div class="input-row file-input-row">
-                        <input type="file" id="imageInput" accept="image/*">
-                        <button class="btn-action" onclick="removeBackground()">Hapus Background</button>
-                    </div>
-
-                    <div id="loadingBg" class="hidden loading-box">
-                        <div class="spinner"></div>
-                        <p>AI sedang memproses gambar...</p>
-                    </div>
-
-                    <div id="resultBg" class="hidden card-result">
-                        <h4>Hasil Foto Tanpa Background</h4>
-                        <img id="imagePreview" alt="Hasil Background Remover">
-                        <a id="downloadImgLink" download="removed-bg.png" class="btn-download-link">💾 Simpan Foto (PNG)</a>
-                    </div>
-                    <div id="errorBg" class="hidden error-msg"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-                    <p class="section-desc">Unggah foto Anda untuk menghapus latar belakang secara instan.</p>
-                    
-                    <div class="input-row file-input-row">
-                        <input type="file" id="imageInput" accept="image/*">
-                        <button class="btn-action" onclick="removeBackground()">Hapus Background</button>
-                    </div>
-
-                    <div id="loadingBg" class="hidden loading-box">
-                        <div class="spinner"></div>
-                        <p>AI sedang memproses gambar...</p>
-                    </div>
-
-                    <div id="resultBg" class="hidden card-result">
-                        <h4>Hasil Foto Tanpa Background</h4>
-                        <img id="imagePreview" alt="Hasil Background Remover">
-                        <a id="downloadImgLink" download="removed-bg.png" class="btn-download-link">💾 Simpan Foto (PNG)</a>
-                    </div>
-                    <div id="errorBg" class="hidden error-msg"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
                 <div id="bgremoverSection" class="tool-section hidden">
                     <h3>AI Background Remover</h3>
                     <p class="section-desc">Unggah foto Anda untuk menghapus latar belakang secara instan.</p>
