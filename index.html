@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V-Tools Studio</title>
-    <link rel="stylesheet" href="style.css?v=101">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -17,27 +17,25 @@
                 <h2>V-Tools Studio</h2>
                 <p>Silakan ikuti Saluran WhatsApp terlebih dahulu untuk membuka dan menggunakan aplikasi ini secara gratis.</p>
             </div>
-            <button type="button" id="startBtn" class="btn-start">🚀 Start & Follow Saluran WA</button>
+            <button class="btn-start" onclick="startApp()">🚀 Start & Follow Saluran WA</button>
         </div>
     </div>
 
     <!-- HALAMAN UTAMA / DASHBOARD -->
     <div id="dashboardPage" class="dashboard-container hidden">
-        <div class="dashboard-overlay"></div>
-        
         <div class="dashboard-content">
             <header class="dashboard-header">
                 <div class="brand">
                     <h2>✨ V-Tools Studio</h2>
                     <span class="badge">Active Member</span>
                 </div>
-                <button type="button" id="logoutBtn" class="btn-logout">Kunci Kembali</button>
+                <button class="btn-logout" onclick="lockApp()">Kunci Kembali</button>
             </header>
 
             <!-- MENU NAVIGASI TAB -->
             <div class="nav-tabs">
-                <button type="button" class="tab-btn active" data-tab="tiktok">📥 TikTok Downloader</button>
-                <button type="button" class="tab-btn" data-tab="bgremover">🖼️ Hapus Background</button>
+                <button class="tab-btn active" onclick="switchTab('tiktok')">📥 TikTok Downloader</button>
+                <button class="tab-btn" onclick="switchTab('bgremover')">🖼️ Hapus Background</button>
             </div>
 
             <!-- KOTAK UTAMA TOOL -->
@@ -49,7 +47,7 @@
                     
                     <div class="input-row">
                         <input type="text" id="urlInput" placeholder="Tempel tautan video TikTok di sini (https://...)">
-                        <button type="button" id="processTiktokBtn" class="btn-action">Proses</button>
+                        <button class="btn-action" onclick="downloadVideo()">Proses</button>
                     </div>
                     
                     <div id="loadingTiktok" class="hidden loading-box">
@@ -72,7 +70,7 @@
                     
                     <div class="input-row file-input-row">
                         <input type="file" id="imageInput" accept="image/*">
-                        <button type="button" id="processBgBtn" class="btn-action">Hapus Background</button>
+                        <button class="btn-action" onclick="removeBackground()">Hapus Background</button>
                     </div>
 
                     <div id="loadingBg" class="hidden loading-box">
@@ -91,6 +89,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=101"></script>
+    <script src="script.js"></script>
 </body>
 </html>
