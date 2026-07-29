@@ -1,15 +1,11 @@
 // --- FUNGSI TOMBOL START KE SALURAN WHATSAPP ---
 function startApp() {
-    // Simpan status bahwa pengguna sudah menekan start/follow
     localStorage.setItem('hasStarted', 'true');
     
-    // Ganti tautan di bawah ini dengan link Saluran WhatsApp Anda yang sebenarnya
-    const whatsappChannelLink = "https://whatsapp.com/channel/0029VatTAQm7T8bP8Vhwqs3L"; 
-    
-    // Membuka saluran WhatsApp di tab/aplikasi baru
+    // Ganti dengan tautan Saluran WhatsApp Anda
+    const whatsappChannelLink = "https://whatsapp.com/channel/YOUR_CHANNEL_ID_HERE"; 
     window.open(whatsappChannelLink, '_blank');
     
-    // Langsung masuk ke dashboard aplikasi
     checkLoginState();
 }
 
@@ -26,7 +22,6 @@ function checkLoginState() {
 }
 
 function lockApp() {
-    // Menghapus status agar kembali ke halaman tombol Start jika diinginkan
     localStorage.removeItem('hasStarted');
     checkLoginState();
 }
@@ -54,7 +49,7 @@ function switchTab(tabName) {
     }
 }
 
-// --- FITUR 1: TIKTOK DOWNLOADER (TikWM API) ---
+// --- FITUR 1: TIKTOK DOWNLOADER (Menggunakan API Nexray) ---
 async function downloadVideo() {
     const urlInput = document.getElementById('urlInput').value.trim();
     const loading = document.getElementById('loadingTiktok');
@@ -67,6 +62,119 @@ async function downloadVideo() {
     result.classList.add('hidden');
     errorMsg.classList.add('hidden');
     videoPreview.pause();
+    videoPreview.src = "";
+
+    if (!urlInput || !urlInput.includes('tiktok.com')) {
+        showTiktokError("Silakan masukkan tautan TikTok yang valid!");
+        return;
+    }
+
+    loading.classList.remove('hidden');
+
+    try {
+        // Menggunakan endpoint API Nexray yang Anda berikan
+        const response = await fetch(`https://api.nexray.web.id/downloader/tiktok?url=${encodeURIComponent(urlInput)}`);
+        const data = await response.json();
+        
+        loading.classList.add('hidden');
+
+        if (!data?.status || !data?.result) {
+            showTiktokError("Gagal mengambil data TikTok dari server.");
+            return;
+        }
+
+        const resultData = data.result;
+        let videoUrl = "";
+        let titleText = resultData.title || "Video TikTok Tanpa Watermark";
+
+        // Menyesuaikan tipe data (string video atau array slide/gambar)
+        if (typeof resultData.data === 'string') {
+            videoUrl = resultData.data;
+        } else if (Array.isArray(resultData.data) && resultData.data.length > 0) {
+            videoUrl = resultData.data[0]; // Ambil slide pertama jika berupa foto/slide
+        }
+
+        if (!videoUrl) {
+            showTiktokError("Tautan video tidak ditemukan dalam respons.");
+            return;
+        }
+
+        videoTitle.textContent = titleText;
+        downloadLink.href = videoUrl;
+        videoPreview.src = videoUrl;
+        videoPreview.classList.remove('hidden');
+        result.classList.remove('hidden');
+
+    } catch (err) {
+        loading.classList.add('hidden');
+        showTiktokError("Terjadi kesalahan jaringan atau server API sedang sibuk.");
+    }
+}
+
+function showTiktokError(msg) {
+    const err = document.getElementById('errorTiktok');
+    err.textContent = msg;
+    err.classList.remove('hidden');
+}
+
+// --- FITUR 2: HAPUS BACKGROUND (Remove.bg API) ---
+async function removeBackground() {
+    const fileInput = document.getElementById('imageInput');
+    const loading = document.getElementById('loadingBg');
+    const result = document.getElementById('resultBg');
+    const errorMsg = document.getElementById('errorBg');
+    const imagePreview = document.getElementById('imagePreview');
+    const downloadImgLink = document.getElementById('downloadImgLink');
+
+    result.classList.add('hidden');
+    errorMsg.classList.add('hidden');
+
+    if (fileInput.files.length === 0) {
+        showBgError("Pilih atau unggah file gambar terlebih dahulu!");
+        return;
+    }
+
+    const file = fileInput.files[0];
+    loading.classList.remove('hidden');
+
+    const formData = new FormData();
+    formData.append('image_file', file);
+    formData.append('size', 'auto');
+
+    try {
+        const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+            method: 'POST',
+            headers: {
+                'X-Api-Key': '2ojdAyn5iV1fkhdjcPbc9Wnd'
+            },
+            body: formData
+        });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.errors ? errData.errors[0].title : "Gagal memproses gambar.");
+        }
+
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+
+        imagePreview.src = imageUrl;
+        downloadImgLink.href = imageUrl;
+        
+        loading.classList.add('hidden');
+        result.classList.remove('hidden');
+
+    } catch (err) {
+        loading.classList.add('hidden');
+        showBgError("Gagal: " + (err.message || "Periksa koneksi atau batas kuota API Remove.bg Anda."));
+    }
+}
+
+function showBgError(msg) {
+    const err = document.getElementById('errorBg');
+    err.textContent = msg;
+    err.classList.remove('hidden');
+}
     videoPreview.src = "";
 
     if (!urlInput || !urlInput.includes('tiktok.com')) {
